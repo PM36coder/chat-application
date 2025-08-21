@@ -56,7 +56,7 @@ const existingUserName = await User.findOne({ username });
         httpOnly: true,
         secure: process.env.SECURE !== "development",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        sameSite: "strict",
+        sameSite: process.env.SECURE === "development" ? "Lax" : "None" ,
       })
       .json({ msg: "User registered successfully", user: newUser });
   } catch (error) {
@@ -100,7 +100,7 @@ const loginUser = async (req, res) => {
         httpOnly: true,
         secure: process.env.SECURE !== "development",
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite: "strict",
+        sameSite: process.env.SECURE === "development" ? "Lax" : "None" ,
       })
       .json({ msg: "Login successful", user , token });
   } catch (error) {
