@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { LoadingButton } from "./LoadingButton";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useAuth } from "../store/AuthContext.jsx";
 import API from "../utils/Axios.jsx";
 export default function Register() {
@@ -185,9 +185,9 @@ toast.success(data.msg || "Registration Successful")
 
     <p className="text-center text-white/70 mt-4 text-sm">
       Already have an account?{" "}
-      <a href="/login" className="underline cursor-pointer">
+      <Link to="/login" className="underline cursor-pointer">
         Login
-      </a>
+      </Link>
     </p>
   </div>
 </div>
