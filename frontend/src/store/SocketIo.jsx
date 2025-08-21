@@ -18,8 +18,9 @@ useEffect(() => {
   let newSocket;
 
   if (user && user._id) {
-    newSocket = io("http://localhost:3000", {
-      query: { userId: user._id }
+    newSocket = io("https://chat-application-x4mq.onrender.com", {
+      query: { userId: user._id },
+      transports: ['websocket', 'polling']
     });
 
     newSocket.on("getOnlineUsers", (users) => {
