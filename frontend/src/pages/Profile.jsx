@@ -1,7 +1,8 @@
 // components/ProfileModal.jsx
 import { useState } from "react";
-import axios from "axios";
+
 import { toast } from "react-toastify";
+import API from "../utils/Axios";
 
 const ProfileModal = ({ onClose, user, setUser }) => {
   const [file, setFile] = useState(null);
@@ -20,7 +21,7 @@ const ProfileModal = ({ onClose, user, setUser }) => {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      const res = await axios.post("/api/user/upload-profile", formData, {
+      const res = await API.post("/user/upload-profile", formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" }
       });
@@ -36,7 +37,7 @@ const ProfileModal = ({ onClose, user, setUser }) => {
   //remove profile
   const handleRemove = async () => {
   try {
-    const res = await axios.put("/api/user/remove-profile", {}, {
+    const res = await API.put("/user/remove-profile", {}, {
       withCredentials: true
     });
 

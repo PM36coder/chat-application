@@ -1,8 +1,9 @@
-import axios from "axios";
+
 import { useState } from "react";
 import { Link , useNavigate} from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../store/AuthContext.jsx";
+import API from "../utils/Axios.jsx";
 export default function Login() {
   const [form, setForm] = useState({
     username: "",
@@ -29,7 +30,7 @@ export default function Login() {
 
     setLoading(true);
     try {
-      const res = await axios.post("/api/user/login", form, {
+      const res = await API.post("/user/login", form, {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         withCredentials: true,

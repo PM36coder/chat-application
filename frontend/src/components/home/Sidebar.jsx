@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useConversation } from "../../zustand/useConversation";
 import { useSocketContext } from "../../store/SocketIo";
 import ProfileModal from "../../pages/Profile";
+import API from "../../utils/Axios";
 
 const Sidebar = ({ onSelectUser }) => {
   const [userSearch, setSearchUser] = useState([]);
@@ -29,7 +30,7 @@ const Sidebar = ({ onSelectUser }) => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("/api/users/search/users", {
+        const res = await API.get("/users/search/users", {
           withCredentials: true,
         });
         setUsers(res.data.data || []);
@@ -48,7 +49,7 @@ const Sidebar = ({ onSelectUser }) => {
     if (!query.trim()) return toast.error("Enter a username");
     try {
       setLoading(true);
-      const res = await axios.get(`/api/users/search?search=${query}`, {
+      const res = await API.get(`/users/search?search=${query}`, {
         withCredentials: true,
       });
       if (res.data.users.length === 0) toast.info("No user found");
@@ -62,7 +63,7 @@ const Sidebar = ({ onSelectUser }) => {
   // Logout
   const handleLogout = async () => {
     try {
-      const res = await axios.get("/api/user/logout", { withCredentials: true });
+      const res = await API.get("/user/logout", { withCredentials: true });
       setUser(null);
       localStorage.removeItem("user");
       toast.success(res.data.msg || "Logout Successful");

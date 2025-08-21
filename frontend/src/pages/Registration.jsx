@@ -1,9 +1,10 @@
-import axios from "axios";
+
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { LoadingButton } from "./LoadingButton";
 import {useNavigate} from 'react-router-dom';
 import { useAuth } from "../store/AuthContext.jsx";
+import API from "../utils/Axios.jsx";
 export default function Register() {
   const [form, setForm] = useState({
     fullname: "",
@@ -39,7 +40,7 @@ if(form.password !== form.confirmPassword){
     console.log("📦 Submitting form:", form);
 setLoading(true)
     try {
-      const res = await axios.post("/api/user/register",form, {
+      const res = await API.post("/user/register",form, {
         headers: {
           "Content-Type": "application/json",
         },

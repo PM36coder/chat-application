@@ -3,10 +3,11 @@ import { IoSend } from "react-icons/io5";
 import { useAuth } from "../../store/AuthContext";
 import { useConversation } from "../../zustand/useConversation";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import axios from "axios";
+
 import { MdDelete } from "react-icons/md";
 import { useSocketContext } from "../../store/SocketIo";
 import { useCallback } from 'react';
+import API from "../../utils/Axios";
 
 const Message = ({ onBack }) => {
   const { 
@@ -40,7 +41,7 @@ const Message = ({ onBack }) => {
     setIsLoading(true);
     try {
       console.log("📥 [Frontend] Fetching messages for:", selectedConversation._id);
-      const res = await axios.get(`/api/message/get/${selectedConversation._id}`);
+      const res = await API.get(`/message/get/${selectedConversation._id}`);
       const data = res.data;
       const fetchedMessages = Array.isArray(data.msg) ? data.msg : [];
       
@@ -205,8 +206,8 @@ const Message = ({ onBack }) => {
     // console.log("📤 [Frontend] Sending text message:", messageToSend);
     
     try {
-      await axios.post(
-        `/api/message/send/${selectedConversation._id}`,
+      await API.post(
+        `/message/send/${selectedConversation._id}`,
         {
           message: messageToSend,
           receiverId: selectedConversation._id,
@@ -229,7 +230,7 @@ const Message = ({ onBack }) => {
     console.log("🗑️ [Frontend] Deleting message:", messageId);
     
     try {
-      await axios.delete(`/api/message/delete/${messageId}`, { withCredentials: true });
+      await API.delete(`/message/delete/${messageId}`, { withCredentials: true });
       // console.log("✅ [Frontend] Message deleted successfully");
       
       // Don't manually update UI here - let socket handle it
