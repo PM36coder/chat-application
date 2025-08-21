@@ -11,7 +11,16 @@ import {app, server} from './socket.io/socket.js'
 dotenv.config(); // Yeh sabse upar hona chahiye
 // const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://baatgram.netlify.app"
+        
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add this
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'], // Add this
+    credentials: true
+}))
 
 app.use(cookieParser())
 

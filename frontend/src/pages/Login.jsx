@@ -45,7 +45,7 @@ export default function Login() {
       
       setLoading(false);
       setSuccess(data.msg);
-      navigate("/")
+      navigate("/home")
     } catch (err) {
       const msg = err.response?.data?.msg || "Server error. Try again.";
       toast.error(msg);
